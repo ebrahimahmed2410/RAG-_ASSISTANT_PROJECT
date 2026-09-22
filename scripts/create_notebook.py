@@ -76,7 +76,7 @@ def build_notebook():
         "| **Frontend** | Streamlit | 1.33.0+ | Chat-style user interface with citation card rendering |"
     ]))
 
-    # Code cell: Setup and Imports
+    # Code cell 1: Setup and Imports
     cells.append(make_cell("code", [
         "# Environment Setup and Essential Imports",
         "import os",
@@ -118,6 +118,7 @@ def build_notebook():
         "> *Note: No false OCR claims are made; pages with under 30 characters are identified as candidates requiring OCR.*"
     ]))
 
+    # Code cell 2: Extraction & Inspection
     cells.append(make_cell("code", [
         "# PDF Document Loading, Extraction, and Metric Inspection",
         "def load_and_inspect_documents(raw_dir):",
@@ -175,7 +176,8 @@ def build_notebook():
         "print('=== Document Inspection Summary Table ===')",
         "display(df_inspection)",
         "",
-        "print('\n=== Dataset High-Level Metrics ===')",
+        "print('')",
+        "print('=== Dataset High-Level Metrics ===')",
         "print(f'Number of documents:       {len(df_inspection)}')",
         "print(f'Number of pages:           {df_inspection[\"Pages\"].sum()}')",
         "print(f'Total words extracted:     {df_inspection[\"Words\"].sum():,}')",
@@ -203,6 +205,7 @@ def build_notebook():
         "  - *Limitation*: Multi-hop reasoning spanning multiple non-contiguous pages requires higher `top_k` retrieval values."
     ]))
 
+    # Code cell 3: Chunking
     cells.append(make_cell("code", [
         "# Implementation of Boundary-Aware Overlapping Chunking",
         "def chunk_extracted_documents(pages, chunk_size=800, chunk_overlap=150):",
@@ -268,7 +271,8 @@ def build_notebook():
         "print(f'Average characters per chunk: {df_chunks[\"char_count\"].mean():.1f}')",
         "print(f'Average words per chunk: {df_chunks[\"word_count\"].mean():.1f}')",
         "",
-        "print('\n=== Sample Extracted Chunks (Metadata Preservation) ===')",
+        "print('')",
+        "print('=== Sample Extracted Chunks (Metadata Preservation) ===')",
         "display(df_chunks[['chunk_id', 'document', 'page', 'char_count', 'word_count']].head(6))"
     ]))
 
@@ -284,6 +288,7 @@ def build_notebook():
         "- **Persistence Note**: Embeddings are generated once during the ingestion pipeline and stored directly in ChromaDB. The backend loads the pre-computed vectors and does not regenerate document embeddings per request."
     ]))
 
+    # Code cell 4: Embeddings
     cells.append(make_cell("code", [
         "# Embeddings Initialization and Vector Inspection",
         "embedding_model_name = 'sentence-transformers/all-MiniLM-L6-v2'",
@@ -297,10 +302,10 @@ def build_notebook():
         "sample_text = chunks[0]['text']",
         "sample_vector = embedding_fn([sample_text])[0]",
         "",
-        "print(f'[✓] Embedding generation operational.')",
-        "print(f'[✓] Embedding Dimension: {len(sample_vector)}')",
-        "print(f'[✓] Sample Vector (first 5 components): {np.array(sample_vector[:5]).round(4)}')",
-        "print(f'[✓] L2 Norm of vector: {np.linalg.norm(sample_vector):.4f}')"
+        "print('[+] Embedding generation operational.')",
+        "print(f'[+] Embedding Dimension: {len(sample_vector)}')",
+        "print(f'[+] Sample Vector (first 5 components): {np.array(sample_vector[:5]).round(4)}')",
+        "print(f'[+] L2 Norm of vector: {np.linalg.norm(sample_vector):.4f}')"
     ]))
 
     # ==========================================
@@ -317,6 +322,7 @@ def build_notebook():
         "- Verification confirms that the persisted database reloads seamlessly from disk."
     ]))
 
+    # Code cell 5: Vector DB
     cells.append(make_cell("code", [
         "# ChromaDB Vector Store Creation, Ingestion, and Disk Verification",
         "os.makedirs(VECTOR_STORE_DIR, exist_ok=True)",
@@ -349,12 +355,12 @@ def build_notebook():
         "        metadatas=metas[i:end]",
         "    )",
         "",
-        "print(f'[✓] Indexed {collection.count()} chunks into ChromaDB at \"{VECTOR_STORE_DIR}\".')",
+        "print(f'[+] Indexed {collection.count()} chunks into ChromaDB at {VECTOR_STORE_DIR}')",
         "",
         "# Verification: reload client from disk in a new instance",
         "verify_client = chromadb.PersistentClient(path=VECTOR_STORE_DIR)",
         "verify_collection = verify_client.get_collection(name=collection_name, embedding_function=embedding_fn)",
-        "print(f'[✓] Disk persistence verified: reloaded collection contains {verify_collection.count()} chunks.')"
+        "print(f'[+] Disk persistence verified: reloaded collection contains {verify_collection.count()} chunks.')"
     ]))
 
     # ==========================================
@@ -367,6 +373,7 @@ def build_notebook():
         "The retrieval pipeline accepts a user question, computes its semantic embedding, queries the ChromaDB HNSW cosine index, and extracts the `top_k` most relevant chunks along with distance and normalized relevance scores."
     ]))
 
+    # Code cell 6: Retrieval
     cells.append(make_cell("code", [
         "# Reusable Retrieval Function",
         "def retrieve_relevant_chunks(query_text, collection, top_k=4):",
@@ -403,12 +410,14 @@ def build_notebook():
         "sample_query = 'What is the time complexity of binary search?'",
         "results = retrieve_relevant_chunks(sample_query, verify_collection, top_k=3)",
         "",
-        "print(f'Query: \"{sample_query}\"\n')",
+        "print(f'Query: {sample_query}')",
+        "print('')",
         "for i, res in enumerate(results, start=1):",
         "    print(f'Top {i} Result:')",
-        "    print(f'  Source:    {res[\"document\"]} — Page {res[\"page\"]}')",
+        "    print(f'  Source:    {res[\"document\"]} - Page {res[\"page\"]}')",
         "    print(f'  Relevance: {res[\"relevance_score\"]:.1%} (Distance: {res[\"distance\"]})')",
-        "    print(f'  Snippet:   {res[\"text\"][:160]}...\n')"
+        "    print(f'  Snippet:   {res[\"text\"][:160]}...')",
+        "    print('')"
     ]))
 
     # ==========================================
@@ -424,6 +433,7 @@ def build_notebook():
         "3. Cite every referenced claim using `[document_name, Page X]` format."
     ]))
 
+    # Code cell 7: Prompt
     cells.append(make_cell("code", [
         "# Grounded Prompt Construction",
         "def build_grounded_rag_prompt(question, chunks):",
@@ -440,7 +450,7 @@ def build_notebook():
         "        'If the context does not contain enough information, clearly say:\\n'",
         "        '\"I could not find this information in the provided documents.\"\\n'",
         "        'Do not use unsupported external knowledge.\\n'",
-        "        'Include citations to the relevant document and page.'"
+        "        'Include citations to the relevant document and page.'",
         "    )",
         "    ",
         "    prompt = (",
@@ -453,7 +463,7 @@ def build_notebook():
         "",
         "prompt_demo = build_grounded_rag_prompt(sample_query, results)",
         "print('=== Generated Prompt Preview ===')",
-        "print(prompt_demo[:600] + '...\\n[truncated for display]') "
+        "print(prompt_demo[:600] + '... (truncated for display)')"
     ]))
 
     # ==========================================
@@ -468,6 +478,7 @@ def build_notebook():
         "- Connection failures are handled gracefully with a diagnostic fallback summary of the retrieved passages."
     ]))
 
+    # Code cell 8: Ollama
     cells.append(make_cell("code", [
         "# Ollama Inference Client with Graceful Fallback",
         "OLLAMA_HOST = os.getenv('OLLAMA_HOST', 'http://localhost:11434').rstrip('/')",
@@ -483,7 +494,7 @@ def build_notebook():
         "    }",
         "    ",
         "    try:",
-        "        with httpx.Client(timeout=15.0) as client:",
+        "        with httpx.Client(timeout=10.0) as client:",
         "            resp = client.post(url, json=payload)",
         "            if resp.status_code == 200:",
         "                return resp.json().get('response', '').strip()",
@@ -498,7 +509,8 @@ def build_notebook():
         "",
         "print(f'[*] Checking Ollama target: {OLLAMA_HOST} (Model: {OLLAMA_MODEL})')",
         "test_response = query_ollama('Hello, are you ready to act as a grounded assistant?')",
-        "print(f'Response:\\n{test_response}')"
+        "print('Response:')",
+        "print(test_response)"
     ]))
 
     # ==========================================
@@ -529,6 +541,7 @@ def build_notebook():
         "- `Notes`"
     ]))
 
+    # Code cell 9: Evaluation
     cells.append(make_cell("code", [
         "# Comprehensive 10-Question Evaluation Benchmark",
         "EVAL_QUESTIONS = [",
@@ -568,7 +581,7 @@ def build_notebook():
         "    else:",
         "        relevance = 'Low / Irrelevant'",
         "        ans = 'I could not find this information in the provided documents.'",
-        "        grounded = 'Grounded'  # Correctly refused to hallucinate",
+        "        grounded = 'Grounded'",
         "        correct = 'Correct'",
         "        notes = f'Unsupported query correctly identified. Cosine distance to nearest unrelated chunk: {top_dist:.3f}.'",
         "        source_str = f'{top_doc} (Page {top_page}) [Irrelevant Dist: {top_dist:.3f}]'",
@@ -589,14 +602,15 @@ def build_notebook():
         "EVAL_CSV_PATH = os.path.join(BASE_DIR, 'evaluation', 'evaluation_results.csv')",
         "os.makedirs(os.path.dirname(EVAL_CSV_PATH), exist_ok=True)",
         "df_eval.to_csv(EVAL_CSV_PATH, index=False, encoding='utf-8')",
-        "print(f'[✓] Evaluation results exported to: {EVAL_CSV_PATH}\\n')",
+        "print(f'[+] Evaluation results exported to: {EVAL_CSV_PATH}')",
         "",
         "print('=== RAG System Evaluation Results Table ===')",
         "display(df_eval)",
         "",
         "accuracy = (df_eval['Correct / Incorrect'] == 'Correct').mean()",
         "grounded_ratio = (df_eval['Grounded / Not Grounded'] == 'Grounded').mean()",
-        "print(f'\n=== Evaluation Summary Metrics ===')",
+        "print('')",
+        "print('=== Evaluation Summary Metrics ===')",
         "print(f'Overall Correctness:    {accuracy:.1%}')",
         "print(f'Grounding Adherence:    {grounded_ratio:.1%}')"
     ]))
