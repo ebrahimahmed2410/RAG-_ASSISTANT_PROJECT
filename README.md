@@ -471,3 +471,5 @@ docker-compose up --build -d
 This project was developed for academic, graduation, and training demonstration purposes. All educational materials are synthesized from established undergraduate computer science curricula.
 
 Licensed under the [MIT License](LICENSE).
+#   R A G - _ A S S I S T A N T _ P R O J E C T  
+ 
