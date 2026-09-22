@@ -1,0 +1,366 @@
+{
+  "stats": {
+    "num_documents": 4,
+    "total_pages": 16,
+    "total_characters": 22246,
+    "total_words": 3321,
+    "failed_pages": 0,
+    "documents_requiring_ocr": 0,
+    "files": [
+      {
+        "filename": "cs101_data_structures.pdf",
+        "pages": 4,
+        "chars": 6668,
+        "ocr_flag": false
+      },
+      {
+        "filename": "cs102_operating_systems.pdf",
+        "pages": 4,
+        "chars": 5765,
+        "ocr_flag": false
+      },
+      {
+        "filename": "cs103_database_systems.pdf",
+        "pages": 4,
+        "chars": 4954,
+        "ocr_flag": false
+      },
+      {
+        "filename": "cs104_computer_networks.pdf",
+        "pages": 4,
+        "chars": 4859,
+        "ocr_flag": false
+      }
+    ]
+  },
+  "chunks": [
+    {
+      "id": "cs101_data_structures.pdf_p1_c1",
+      "text": "CS101: Data Structures and Algorithms \u2014 Page 1: Linear Data Structures and Asymptotic Foundations 1. Arrays and Dynamic Arrays An array is a contiguous block of memory storing elements of homogenous type. In a static array, size is fixed at allocation time. Element access is achieved via pointer arithmetic: Address(A[i]) = BaseAddress + i * sizeof(Element), providing deterministic O(1) time complexity. Dynamic arrays (such as Python lists or C++ std::vector) automatically resize when capacity is reached. The common growth factor is 2. Resizing requires allocating a new array of double the capacity and copying all n elements, an O(n) operation. However, amortized analysis over a sequence of n insertions shows that the amortized cost per insertion is O(1). 2.",
+      "document": "cs101_data_structures.pdf",
+      "page": 1,
+      "chunk_index": 1,
+      "char_count": 767
+    },
+    {
+      "id": "cs101_data_structures.pdf_p1_c2",
+      "text": ". However, amortized analysis over a sequence of n insertions shows that the amortized cost per insertion is O(1). 2. Linked Lists A linked list is a linear collection of data elements where order is not given by physical placement in memory. Instead, each element points to the next. In a Singly Linked List, each node contains a value and a 'next' pointer. In a Doubly Linked List, each node contains 'next' and 'prev' pointers. \u007f Insertion at the head is O(1) time complexity. \u007f Insertion at arbitrary position requires traversal, taking O(n) time. \u007f Search requires linear traversal, resulting in O(n) worst-case time. \u007f Linked lists avoid contiguous memory requirements and prevent costly reallocation copying. 3. Stacks and Queues A Stack operates on a Last-In, First-Out (LIFO) protocol.",
+      "document": "cs101_data_structures.pdf",
+      "page": 1,
+      "chunk_index": 2,
+      "char_count": 794
+    },
+    {
+      "id": "cs101_data_structures.pdf_p1_c3",
+      "text": "uous memory requirements and prevent costly reallocation copying. 3. Stacks and Queues A Stack operates on a Last-In, First-Out (LIFO) protocol. Key operations are push, pop, and peek, all executing in O(1) time. Stacks are used in runtime call stacks, expression evaluation (Shunting-yard algorithm), and backtrack algorithms. A Queue operates on a First-In, First-Out (FIFO) discipline. Operations include enqueue and dequeue in O(1) time. Implementations frequently use circular buffers or doubly linked lists to avoid O(n) shifting. Applications include breadth-first search and task scheduling buffers.",
+      "document": "cs101_data_structures.pdf",
+      "page": 1,
+      "chunk_index": 3,
+      "char_count": 607
+    },
+    {
+      "id": "cs101_data_structures.pdf_p2_c1",
+      "text": "CS101: Data Structures and Algorithms \u2014 Page 2: Non-Linear Structures: Trees and Balancing 1. Binary Search Trees (BST) A Binary Search Tree is a hierarchical structure where each node has at most two children. The BST invariant mandates that for any node X, all values in the left subtree are strictly less than X, and all values in the right subtree are strictly greater than X. In an optimally balanced BST, search, insertion, and deletion operate in O(log n) time. However, if keys are inserted in sorted order, the BST degenerates into a linked list with height O(n), causing worst-case operations to degrade to O(n). Traversals: In-order traversal (Left, Root, Right) of a BST outputs elements in monotonically ascending order.",
+      "document": "cs101_data_structures.pdf",
+      "page": 2,
+      "chunk_index": 1,
+      "char_count": 733
+    },
+    {
+      "id": "cs101_data_structures.pdf_p2_c2",
+      "text": "sal (Left, Root, Right) of a BST outputs elements in monotonically ascending order. Pre-order is used for serialization, and Post-order is used for deletion and tree destruction. 2. Self-Balancing Trees: AVL and Red-Black Trees To prevent tree degeneration, self-balancing binary search trees maintain logarithmic height. \u007f AVL Trees: For every node, the height difference between left and right subtrees (the Balance Factor) must be in {-1, 0, +1}. When an insertion or deletion violates this, tree rotations (Left Rotation, Right Rotation, Left-Right Rotation, or Right-Left Rotation) restore balance in O(log n) time. \u007f Red-Black Trees: Nodes are colored Red or Black.",
+      "document": "cs101_data_structures.pdf",
+      "page": 2,
+      "chunk_index": 2,
+      "char_count": 671
+    },
+    {
+      "id": "cs101_data_structures.pdf_p2_c3",
+      "text": "colored Red or Black. The root is Black, no two consecutive Red nodes are allowed, and every path from root to leaf contains the identical number of Black nodes. Red-Black trees require fewer rotations during mutations than AVL trees, making them standard for system library maps (such as C++ std::map).",
+      "document": "cs101_data_structures.pdf",
+      "page": 2,
+      "chunk_index": 3,
+      "char_count": 303
+    },
+    {
+      "id": "cs101_data_structures.pdf_p3_c1",
+      "text": "CS101: Data Structures and Algorithms \u2014 Page 3: Hash Tables and Graph Algorithms 1. Hash Tables and Collision Resolution A Hash Table maps keys to indices in an array using a hash function: index = hash(key) mod capacity. An effective hash function distributes keys uniformly across slots to minimize collisions. Collision Resolution Strategies: \u007f Separate Chaining: Each bucket holds a linked list or small balanced tree of entries that hash to the same bucket. Average lookup time is O(1 + alpha), where alpha = n / m is the load factor. \u007f Open Addressing: All elements reside directly in the table. On collision, probe sequences are examined: Linear Probing (hash(k) + i mod m), Quadratic Probing (hash(k) + c1*i + c2*i^2 mod m), or Double Hashing (hash1(k) + i * hash2(k) mod m). 2.",
+      "document": "cs101_data_structures.pdf",
+      "page": 3,
+      "chunk_index": 1,
+      "char_count": 786
+    },
+    {
+      "id": "cs101_data_structures.pdf_p3_c2",
+      "text": "ar Probing (hash(k) + i mod m), Quadratic Probing (hash(k) + c1*i + c2*i^2 mod m), or Double Hashing (hash1(k) + i * hash2(k) mod m). 2. Graph Representations and Traversal A graph G = (V, E) comprises vertices V and edges E. Graphs are represented using: \u007f Adjacency Matrix: A 2D array of size |V| x |V|. Edge lookup is O(1), but memory complexity is O(|V|^2), inefficient for sparse graphs. \u007f Adjacency List: An array or dictionary of lists, storing adjacent neighbors for each vertex. Space complexity is O(|V| + |E|). Traversals: \u007f Breadth-First Search (BFS): Explores nodes level by level using a FIFO queue. Time complexity is O(|V| + |E|). BFS identifies the shortest path in unweighted graphs. \u007f Depth-First Search (DFS): Explores branches deeply using recursion or a LIFO stack.",
+      "document": "cs101_data_structures.pdf",
+      "page": 3,
+      "chunk_index": 2,
+      "char_count": 787
+    },
+    {
+      "id": "cs101_data_structures.pdf_p3_c3",
+      "text": "identifies the shortest path in unweighted graphs. \u007f Depth-First Search (DFS): Explores branches deeply using recursion or a LIFO stack. Time complexity is O(|V| + |E|). Used for cycle detection, topological sorting of DAGs, and strongly connected components.",
+      "document": "cs101_data_structures.pdf",
+      "page": 3,
+      "chunk_index": 3,
+      "char_count": 259
+    },
+    {
+      "id": "cs101_data_structures.pdf_p4_c1",
+      "text": "CS101: Data Structures and Algorithms \u2014 Page 4: Asymptotic Complexity and Sorting Algorithms 1. Asymptotic Notations Computational complexity assesses algorithm efficiency as input size n approaches infinity. \u007f Big-O (O): Asymptotic upper bound. f(n) = O(g(n)) if there exist constants c > 0 and n0 such that f(n) <= c * g(n) for all n >= n0. \u007f Big-Omega (\u2126): Asymptotic lower bound. f(n) = \u2126(g(n)) if f(n) >= c * g(n) for all n >= n0. \u007f Big-Theta (\u0398): Asymptotic tight bound. f(n) = \u0398(g(n)) if f(n) is both O(g(n)) and \u2126(g(n)). 2. Comparison Sorting Algorithms \u007f Quicksort: Divide-and-conquer algorithm. Selects a pivot, partitions array into elements less than and greater than pivot, and recursively sorts subarrays. Average time complexity is O(n log n).",
+      "document": "cs101_data_structures.pdf",
+      "page": 4,
+      "chunk_index": 1,
+      "char_count": 758
+    },
+    {
+      "id": "cs101_data_structures.pdf_p4_c2",
+      "text": "ts less than and greater than pivot, and recursively sorts subarrays. Average time complexity is O(n log n). Worst-case time is O(n^2) when pivot is poorly chosen (e.g., smallest/largest in already sorted array). Mitigated by Randomized Pivot selection. \u007f Mergesort: Divides array into halves, recursively sorts, and merges sorted halves. Guaranteed O(n log n) worst-case time complexity. Stable sort, but requires O(n) auxiliary space. \u007f Heapsort: Builds a max-heap in O(n) time, then repeatedly extracts maximum element in O(log n) time. In-place sorting with O(n log n) worst-case time complexity, but not stable. 3. Binary Search Binary Search locates a target element in a sorted array by repeatedly halving the search interval. At each step, the target is compared with the median element.",
+      "document": "cs101_data_structures.pdf",
+      "page": 4,
+      "chunk_index": 2,
+      "char_count": 795
+    },
+    {
+      "id": "cs101_data_structures.pdf_p4_c3",
+      "text": "cates a target element in a sorted array by repeatedly halving the search interval. At each step, the target is compared with the median element. Recurrence relation: T(n) = T(n/2) + O(1). By the Master Theorem, time complexity is O(log n). Space complexity is O(1) iterative or O(log n) recursive.",
+      "document": "cs101_data_structures.pdf",
+      "page": 4,
+      "chunk_index": 3,
+      "char_count": 298
+    },
+    {
+      "id": "cs102_operating_systems.pdf_p1_c1",
+      "text": "CS102: Operating Systems Concepts \u2014 Page 1: Processes, Threads, and Concurrency 1. The Process Model and Process Control Block A process is an active program in execution. The operating system maintains metadata for each process in a Process Control Block (PCB). The PCB contains: Process Identification (PID), Process State, Program Counter (PC), CPU Registers, CPU Scheduling Information (priority), Memory-Management Information (page tables), and I/O Status Information. Process Lifecycle States: \u007f New: Process is being created. \u007f Ready: Process is loaded in memory and waiting for CPU allocation. \u007f Running: Instructions are being executed by the CPU core. \u007f Waiting/Blocked: Process is waiting for an I/O completion or event. \u007f Terminated: Process has completed execution.",
+      "document": "cs102_operating_systems.pdf",
+      "page": 1,
+      "chunk_index": 1,
+      "char_count": 779
+    },
+    {
+      "id": "cs102_operating_systems.pdf_p1_c2",
+      "text": "he CPU core. \u007f Waiting/Blocked: Process is waiting for an I/O completion or event. \u007f Terminated: Process has completed execution. Context Switch: The mechanism of saving the state of the active process in its PCB and restoring the state of another scheduled process. Context switches incur pure system overhead. 2. Threads and Multithreading A thread is the smallest unit of CPU utilization within a process. Multiple threads of the same process share the code section, data section, and open files (OS resources). However, each thread retains its own private Thread ID, Program Counter, Register set, and Stack.",
+      "document": "cs102_operating_systems.pdf",
+      "page": 1,
+      "chunk_index": 2,
+      "char_count": 612
+    },
+    {
+      "id": "cs102_operating_systems.pdf_p1_c3",
+      "text": "eness in interactive applications, resource sharing, economy (creating threads is faster than processes), and scalable utilization of multi-core processors.",
+      "document": "cs102_operating_systems.pdf",
+      "page": 1,
+      "chunk_index": 3,
+      "char_count": 156
+    },
+    {
+      "id": "cs102_operating_systems.pdf_p2_c1",
+      "text": "CS102: Operating Systems Concepts \u2014 Page 2: CPU Scheduling and Synchronization 1. CPU Scheduling Algorithms \u007f First-Come, First-Served (FCFS): Non-preemptive. Simple FIFO queue, but suffers from the Convoy Effect where short processes wait behind long CPU bursts. \u007f Shortest Job First (SJF) & Shortest Remaining Time First (SRTF): Schedules the process with minimal CPU burst duration. Provably optimal in minimizing average waiting time, but susceptible to starvation of long jobs. \u007f Round Robin (RR): Preemptive scheduling where each ready process receives a discrete time slice (time quantum q). If quantum is excessively large, RR degenerates to FCFS; if quantum is too small, excessive context-switch overhead degrades performance.",
+      "document": "cs102_operating_systems.pdf",
+      "page": 2,
+      "chunk_index": 1,
+      "char_count": 736
+    },
+    {
+      "id": "cs102_operating_systems.pdf_p2_c2",
+      "text": "FCFS; if quantum is too small, excessive context-switch overhead degrades performance. \u007f Multilevel Feedback Queue (MLFQ): Multiple priority queues with adaptive demotion for CPU-intensive processes and promotion for I/O-bound processes. 2. The Critical Section Problem and Synchronization A race condition occurs when multiple threads concurrently access and mutate shared data, and the outcome depends on execution timing. The Critical Section must satisfy three criteria: Mutual Exclusion, Progress, and Bounded Waiting. Primitives: \u007f Mutex Locks: Binary flag providing mutual exclusion via acquire() and release(). \u007f Semaphores: Integer variable S accessed through wait() (P) and signal() (V). A counting semaphore controls access to a finite set of resources.",
+      "document": "cs102_operating_systems.pdf",
+      "page": 2,
+      "chunk_index": 2,
+      "char_count": 764
+    },
+    {
+      "id": "cs102_operating_systems.pdf_p2_c3",
+      "text": "S accessed through wait() (P) and signal() (V). A counting semaphore controls access to a finite set of resources.",
+      "document": "cs102_operating_systems.pdf",
+      "page": 2,
+      "chunk_index": 3,
+      "char_count": 114
+    },
+    {
+      "id": "cs102_operating_systems.pdf_p3_c1",
+      "text": "CS102: Operating Systems Concepts \u2014 Page 3: Deadlock Principles and Management 1. The Four Coffman Deadlock Conditions A deadlock situation in an operating system occurs if and only if all four Coffman conditions hold simultaneously: 1. Mutual Exclusion: At least one resource must be held in a non-shareable mode. 2. Hold and Wait: A process must hold at least one resource while waiting to acquire additional resources held by other processes. 3. No Preemption: Resources cannot be forcibly taken from a process holding them; they must be released voluntarily. 4. Circular Wait: A closed chain of processes exists such that each process holds at least one resource needed by the next process in the cycle. 2.",
+      "document": "cs102_operating_systems.pdf",
+      "page": 3,
+      "chunk_index": 1,
+      "char_count": 710
+    },
+    {
+      "id": "cs102_operating_systems.pdf_p3_c2",
+      "text": "ast one resource needed by the next process in the cycle. 2. Deadlock Handling Strategies \u007f Deadlock Prevention: Eliminates at least one of the four Coffman conditions. For example, enforcing a total resource ordering eliminates Circular Wait. \u007f Deadlock Avoidance: The OS inspects resource allocation requests dynamically using the Banker's Algorithm. The system determines if granting a request leaves the system in a 'Safe State' (a sequence of process completions exists where all demands can be met). \u007f Deadlock Detection and Recovery: Employs a Wait-For Graph (WFG) to detect cycles. Recovery is accomplished via process termination or selective resource preemption with rollback.",
+      "document": "cs102_operating_systems.pdf",
+      "page": 3,
+      "chunk_index": 2,
+      "char_count": 686
+    },
+    {
+      "id": "cs102_operating_systems.pdf_p4_c1",
+      "text": "CS102: Operating Systems Concepts \u2014 Page 4: Virtual Memory, Paging, and Page Replacement 1. Paging Architecture and Address Translation Virtual memory decouples logical addresses viewed by user programs from physical RAM addresses. Physical memory is segmented into fixed-size frames, and logical memory is divided into equal-sized pages (standard 4KB). The Memory Management Unit (MMU) translates a logical address (Page Number p, Offset d) to physical address (Frame Number f, Offset d) via the Page Table. Translation Lookaside Buffer (TLB): A high-speed associative hardware cache holding recent page-to-frame translations. Effective Memory Access Time (EMAT) = HitRate * (TLB_access + RAM_access) + (1 - HitRate) * (TLB_access + 2 * RAM_access). 2.",
+      "document": "cs102_operating_systems.pdf",
+      "page": 4,
+      "chunk_index": 1,
+      "char_count": 753
+    },
+    {
+      "id": "cs102_operating_systems.pdf_p4_c2",
+      "text": "s Time (EMAT) = HitRate * (TLB_access + RAM_access) + (1 - HitRate) * (TLB_access + 2 * RAM_access). 2. Page Faults and Page Replacement Algorithms When a process accesses a page not present in physical memory (valid-invalid bit set to invalid), a Page Fault interrupt traps to the OS kernel. The OS locates the page on backing store (swap disk), finds a free frame, reads the page into memory, updates the page table, and restarts the faulting instruction. Algorithms for victim page selection: \u007f FIFO: Replaces the oldest page. Suffers from Belady's Anomaly (increasing frames can increase page faults). \u007f Optimal (OPT / Belady's Min): Replaces page that will not be referenced for longest future duration. Serves as a theoretical benchmark.",
+      "document": "cs102_operating_systems.pdf",
+      "page": 4,
+      "chunk_index": 2,
+      "char_count": 743
+    },
+    {
+      "id": "cs102_operating_systems.pdf_p4_c3",
+      "text": "e that will not be referenced for longest future duration. Serves as a theoretical benchmark. \u007f Least Recently Used (LRU): Replaces page that has not been referenced for the longest period. Implemented via hardware timestamp registers or doubly linked stacks.",
+      "document": "cs102_operating_systems.pdf",
+      "page": 4,
+      "chunk_index": 3,
+      "char_count": 259
+    },
+    {
+      "id": "cs103_database_systems.pdf_p1_c1",
+      "text": "CS103: Database Management Systems \u2014 Page 1: Relational Model, Keys, and Relational Algebra 1. Foundations of the Relational Model The relational model organizes data into Relations (tables) comprised of Tuples (rows) and Attributes (columns). Each attribute is constrained to an atomic domain of values. Key Terminology: \u007f Superkey: A set of one or more attributes that uniquely identifies a tuple within a relation. \u007f Candidate Key: A minimal superkey (no proper subset is itself a superkey). \u007f Primary Key: The specific candidate key chosen by the database designer as the principal tuple identifier. Primary keys cannot contain NULL values (Entity Integrity).",
+      "document": "cs103_database_systems.pdf",
+      "page": 1,
+      "chunk_index": 1,
+      "char_count": 663
+    },
+    {
+      "id": "cs103_database_systems.pdf_p1_c2",
+      "text": "y Integrity). \u007f Foreign Key: An attribute set in a referencing relation whose values must match the primary key of a referenced relation or be NULL (Referential Integrity). 2. Relational Algebra and SQL Queries Relational algebra provides formal theoretical foundation for relational databases: Select (sigma), Project (pi), Union, Set Difference, Cartesian Product, and Natural Join (bowtie). SQL translates these operations declaratively. Join types include: \u007f Inner Join: Returns rows when matching values exist in both tables. \u007f Left Outer Join: Returns all rows from left table and matched rows from right table (NULL filled if no match). \u007f Right Outer Join and Full Outer Join: Symmetric outer join variants.",
+      "document": "cs103_database_systems.pdf",
+      "page": 1,
+      "chunk_index": 2,
+      "char_count": 714
+    },
+    {
+      "id": "cs103_database_systems.pdf_p1_c3",
+      "text": "t Outer Join and Full Outer Join: Symmetric outer join variants.",
+      "document": "cs103_database_systems.pdf",
+      "page": 1,
+      "chunk_index": 3,
+      "char_count": 64
+    },
+    {
+      "id": "cs103_database_systems.pdf_p2_c1",
+      "text": "CS103: Database Management Systems \u2014 Page 2: Normalization and Functional Dependencies 1. Functional Dependencies and Modification Anomalies Poor database design induces update anomalies, insertion anomalies, and deletion anomalies. A Functional Dependency (FD) X -> Y asserts that whenever two tuples agree on attributes X, they must agree on attributes Y. Armstrong's Axioms: Reflexivity (if Y subset X, then X -> Y), Augmentation (if X -> Y, then XZ -> YZ), and Transitivity (if X -> Y and Y -> Z, then X -> Z). 2. Normal Forms: 1NF, 2NF, 3NF, and BCNF \u007f First Normal Form (1NF): All attribute domains contain only atomic, indivisible values; repeating groups and multi-valued attributes are eliminated.",
+      "document": "cs103_database_systems.pdf",
+      "page": 2,
+      "chunk_index": 1,
+      "char_count": 706
+    },
+    {
+      "id": "cs103_database_systems.pdf_p2_c2",
+      "text": "ating groups and multi-valued attributes are eliminated. \u007f Second Normal Form (2NF): Relation is in 1NF and every non-prime attribute is fully functionally dependent on every candidate key (no partial dependencies). \u007f Third Normal Form (3NF): Relation is in 2NF and no non-prime attribute is transitively dependent on a candidate key (for every X -> A, either X is a superkey or A is a prime attribute). \u007f Boyce-Codd Normal Form (BCNF): Stricter variant of 3NF. For every non-trivial functional dependency X -> Y, the determinant X must be a superkey.",
+      "document": "cs103_database_systems.pdf",
+      "page": 2,
+      "chunk_index": 2,
+      "char_count": 551
+    },
+    {
+      "id": "cs103_database_systems.pdf_p3_c1",
+      "text": "CS103: Database Management Systems \u2014 Page 3: Transactions and ACID Guarantees 1. Transaction Definition and States A transaction is a logical unit of database processing consisting of one or more read and write operations. A transaction must transition through discrete states: Active -> Partially Committed -> Committed, or if errors occur, Failed -> Aborted (followed by rollback). 2. The ACID Properties \u007f Atomicity: The 'all-or-nothing' principle. Either all transaction operations execute successfully to completion, or the database is rolled back to its pre-transaction state via Undo logs. \u007f Consistency: A transaction must transform the database from one valid state to another valid state, satisfying all declared schema constraints, unique keys, and foreign keys.",
+      "document": "cs103_database_systems.pdf",
+      "page": 3,
+      "chunk_index": 1,
+      "char_count": 773
+    },
+    {
+      "id": "cs103_database_systems.pdf_p3_c2",
+      "text": "ase from one valid state to another valid state, satisfying all declared schema constraints, unique keys, and foreign keys. \u007f Isolation: Concurrent transactions must execute without mutual interference. Intermediate uncommitted changes remain invisible to concurrent operations. \u007f Durability: Once a transaction commits, its modifications are permanently recorded in non-volatile storage and survive subsequent system crashes (enforced by Write-Ahead Logging WAL).",
+      "document": "cs103_database_systems.pdf",
+      "page": 3,
+      "chunk_index": 2,
+      "char_count": 464
+    },
+    {
+      "id": "cs103_database_systems.pdf_p4_c1",
+      "text": "CS103: Database Management Systems \u2014 Page 4: Concurrency Control and Storage Indexing 1. Concurrency Control and Two-Phase Locking (2PL) Uncontrolled concurrent access causes anomalies: Dirty Reads (reading uncommitted data), Non-repeatable Reads (data modified between reads), and Phantom Reads (rows inserted/deleted matching a query predicate). Two-Phase Locking (2PL) protocol ensures conflict serializability: \u007f Growing Phase: Transaction may acquire locks (Shared S or Exclusive X) but cannot release any lock. \u007f Shrinking Phase: Transaction may release locks but cannot acquire new locks. Strict 2PL: All exclusive locks are held until transaction commits or aborts, preventing cascading rollbacks. 2.",
+      "document": "cs103_database_systems.pdf",
+      "page": 4,
+      "chunk_index": 1,
+      "char_count": 708
+    },
+    {
+      "id": "cs103_database_systems.pdf_p4_c2",
+      "text": "tion commits or aborts, preventing cascading rollbacks. 2. Database Indexing: B+ Trees and Hash Indexes \u007f B+ Tree Index: Balanced multi-way search tree where all data records or record pointers reside exclusively in leaf nodes. Leaves are doubly linked to support fast range queries. Internal nodes store search keys and pointers, yielding high fan-out and shallow tree height (typically 3 to 4 levels for millions of records). Search, insert, and delete take O(log n) disk I/O. \u007f Hash Index: Uses a hash function to map keys to bucket blocks. Provides O(1) point lookups, but does not support range scans or sorted ordering.",
+      "document": "cs103_database_systems.pdf",
+      "page": 4,
+      "chunk_index": 2,
+      "char_count": 625
+    },
+    {
+      "id": "cs104_computer_networks.pdf_p1_c1",
+      "text": "CS104: Computer Networks and Protocols \u2014 Page 1: Network Architectures and Layering Models 1. OSI 7-Layer Reference Model vs. TCP/IP Architecture Network protocol suites are organized hierarchically into distinct functional layers. The ISO/OSI Reference Model defines 7 layers: 1. Physical Layer: Bit transmission over physical media (voltage levels, optical pulses). 2. Data Link Layer: Frame transmission, physical MAC addressing, framing, and CRC error detection. 3. Network Layer: Host-to-host packet routing, logical IP addressing, and path determination. 4. Transport Layer: End-to-end process-to-process communication, reliability, flow and congestion control. 5. Session Layer: Dialog management, session establishment, and checkpointing. 6.",
+      "document": "cs104_computer_networks.pdf",
+      "page": 1,
+      "chunk_index": 1,
+      "char_count": 749
+    },
+    {
+      "id": "cs104_computer_networks.pdf_p1_c2",
+      "text": "ngestion control. 5. Session Layer: Dialog management, session establishment, and checkpointing. 6. Presentation Layer: Syntax and semantics negotiation, data encryption, and compression. 7. Application Layer: Network interface for user applications (HTTP, DNS, SMTP). The TCP/IP Internet model condenses this into 4 layers: Network Interface (Link), Internet, Transport, and Application.",
+      "document": "cs104_computer_networks.pdf",
+      "page": 1,
+      "chunk_index": 2,
+      "char_count": 388
+    },
+    {
+      "id": "cs104_computer_networks.pdf_p2_c1",
+      "text": "CS104: Computer Networks and Protocols \u2014 Page 2: Network Layer, IP Addressing, and Routing 1. IPv4 Addressing and Subnetting An IPv4 address is a 32-bit integer formatted as four dotted-decimal octets (e.g., 192.168.1.1). Classless Inter-Domain Routing (CIDR) uses variable-length prefix notation (/prefix) to allocate IP blocks efficiently. Subnet Mask: A bitmask dividing an IP into Network ID and Host ID. For a /24 prefix, mask is 255.255.255.0, offering 2^(32-24) - 2 = 254 usable host addresses (subtracting network address and broadcast address). Address Resolution Protocol (ARP) dynamically resolves logical IP addresses to physical 48-bit Ethernet MAC addresses on a local subnet. 2. Routing Algorithms: Distance-Vector vs.",
+      "document": "cs104_computer_networks.pdf",
+      "page": 2,
+      "chunk_index": 1,
+      "char_count": 733
+    },
+    {
+      "id": "cs104_computer_networks.pdf_p2_c2",
+      "text": "thernet MAC addresses on a local subnet. 2. Routing Algorithms: Distance-Vector vs. Link-State \u007f Distance-Vector Routing (e.g., RIP): Routers iteratively share their entire routing table with immediate neighbors using the Bellman-Ford algorithm. Subject to the Count-to-Infinity problem, mitigated by Split Horizon and Poison Reverse. \u007f Link-State Routing (e.g., OSPF): Routers flood Link-State Advertisements (LSAs) across the entire network domain and independently compute shortest path trees using Dijkstra's algorithm. Avoids routing loops and converges rapidly.",
+      "document": "cs104_computer_networks.pdf",
+      "page": 2,
+      "chunk_index": 2,
+      "char_count": 567
+    },
+    {
+      "id": "cs104_computer_networks.pdf_p3_c1",
+      "text": "CS104: Computer Networks and Protocols \u2014 Page 3: Transport Layer: TCP vs. UDP and Congestion Control 1. TCP vs. UDP Comparison \u007f UDP (User Datagram Protocol): Connectionless, lightweight, unacknowledged transport protocol with minimal 8-byte header overhead. Provides no guarantees for delivery, ordering, or duplicate protection. Ideal for latency-sensitive streaming, DNS queries, and real-time VoIP. \u007f TCP (Transmission Control Protocol): Connection-oriented, reliable byte-stream protocol. Implements connection setup via the Three-Way Handshake (SYN, SYN-ACK, ACK) and teardown via Four-Way Handshake (FIN, ACK, FIN, ACK). 2. TCP Reliability and Congestion Control TCP ensures reliable transmission through sequence numbers, cumulative acknowledgments, and retransmission timers.",
+      "document": "cs104_computer_networks.pdf",
+      "page": 3,
+      "chunk_index": 1,
+      "char_count": 784
+    },
+    {
+      "id": "cs104_computer_networks.pdf_p3_c2",
+      "text": "Congestion Control TCP ensures reliable transmission through sequence numbers, cumulative acknowledgments, and retransmission timers. Flow control is maintained through the Receive Window (rwnd) advertised in TCP headers to avoid buffer overflow on the receiver. Congestion Control manages network bottleneck capacity via the Congestion Window (cwnd): \u007f Slow Start: cwnd starts at 1 MSS and doubles every RTT (exponential growth) until reaching ssthresh. \u007f Congestion Avoidance: cwnd increases linearly by 1 MSS per RTT (Additive Increase). \u007f Fast Retransmit and Fast Recovery: Upon receiving 3 duplicate ACKs, TCP infers packet loss, retransmits without waiting for timer expiry, and halves ssthresh (Multiplicative Decrease - AIMD).",
+      "document": "cs104_computer_networks.pdf",
+      "page": 3,
+      "chunk_index": 2,
+      "char_count": 734
+    },
+    {
+      "id": "cs104_computer_networks.pdf_p3_c3",
+      "text": "thout waiting for timer expiry, and halves ssthresh (Multiplicative Decrease - AIMD).",
+      "document": "cs104_computer_networks.pdf",
+      "page": 3,
+      "chunk_index": 3,
+      "char_count": 85
+    },
+    {
+      "id": "cs104_computer_networks.pdf_p4_c1",
+      "text": "CS104: Computer Networks and Protocols \u2014 Page 4: Application Layer Protocols: DNS, HTTP, and TLS 1. Domain Name System (DNS) DNS is a distributed, hierarchical database mapping human-readable hostnames to IP addresses. The hierarchy comprises Root Servers, Top-Level Domain (TLD) servers (.com, .org), and Authoritative Name Servers. Key DNS Record Types: A (IPv4 address), AAAA (IPv6 address), CNAME (canonical alias), MX (mail exchange server), and TXT (arbitrary text, SPF/DKIM verification). 2. HTTP Evolution and TLS Security \u007f HTTP/1.1: Introduced persistent TCP connections (Keep-Alive) and chunked transfer encoding, but suffers from Head-of-Line (HoL) blocking on single TCP streams. \u007f HTTP/2: Replaces textual format with binary framing.",
+      "document": "cs104_computer_networks.pdf",
+      "page": 4,
+      "chunk_index": 1,
+      "char_count": 747
+    },
+    {
+      "id": "cs104_computer_networks.pdf_p4_c2",
+      "text": "Line (HoL) blocking on single TCP streams. \u007f HTTP/2: Replaces textual format with binary framing. Multiplexes concurrent requests and responses over a single TCP connection, utilizes HPACK header compression, and supports server push. \u007f HTTP/3: Operates over QUIC (a UDP-based transport protocol), eliminating TCP Head-of-Line blocking across independent streams and supporting zero-RTT connection resumption. \u007f Transport Layer Security (TLS): Provides end-to-end encryption, server authentication via X.509 certificates, and message integrity via HMAC or AEAD ciphers.",
+      "document": "cs104_computer_networks.pdf",
+      "page": 4,
+      "chunk_index": 2,
+      "char_count": 569
+    }
+  ]
+}
